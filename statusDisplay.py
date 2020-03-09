@@ -39,9 +39,6 @@ disp.begin()
 disp.clear()
 disp.display()
 
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(PIN_SHUTDOWN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-
 image = Image.new('1', (width, height))
 draw = ImageDraw.Draw(image)
 #font = ImageFont.truetype('fonts/Retron2000.ttf', 27)
