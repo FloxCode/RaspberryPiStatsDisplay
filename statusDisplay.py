@@ -26,7 +26,7 @@ sdUsageCmd  = "df | grep /dev/root | awk '{printf \"%.2f\", $3*100/($3+$4)}'"
 memUsageCmd = "free | awk 'NR==2{printf \"%.1f\", $3*100/$2 }'"
 swapCmd     = "free | awk 'NR==3{printf \"%.1f\", $3*100/$2 }'"
 # Weitere Kommandos
-alreadyRunningCmd = "sudo ps aux | grep statusDisplay.py | grep -v grep | wc -l"  
+alreadyRunningCmd = "sudo ps aux | grep \"python.*statusDisplay.py\" | grep -v grep | wc -l"  
 shutdownCmd       = "sudo shutdown -h now"
 
 cmds = [(uptimeCmd,   "Läuft seit",  ""),
@@ -38,7 +38,14 @@ cmds = [(uptimeCmd,   "Läuft seit",  ""),
         (swapCmd,     "Swap",        "%")
         ]
 
-# Pruefen, ob Programm bereits laeuft
+
+callParam = ""
+if(len(sys.argv)!=2):
+    print("Bitte mit genau einem Parameter aufrufen")
+else:
+    callParam = sys.argv[1]
+
+# Pruefen, ob Programm bereits laeuft (nur bei --debug oder --silent)
 if(int(subprocess.check_output(alreadyRunningCmd, shell=True))>1):
     print("Programm laeuft bereits!")
 else:
@@ -162,18 +169,15 @@ else:
         print("--silent    : Statusausgaben nur auf Display")
         print("--help / -h : Anzeige dieser Hilfe")
 
-    callParam = ""
-    if(len(sys.argv)==2):
-        callParam = sys.argv[1]
-        if("--boot" == callParam):
-            write(disp, "", "BOOTING...")
-        elif("--debug" == callParam):
-            showStats(True)
-        elif("--silent" == callParam):
-            showStats(False)
-        else:
-            printHelp()
-            write(disp, "", "   ???")
+    if("--boot" == callParam):
+        write(disp, "", "BOOTING...")
+        time.sleep(10)
+        showStats(False)
+    elif("--debug" == callParam):
+        showStats(True)
+    elif("--silent" == callParam):
+        showStats(False)
     else:
-        print("Bitte genau einen Parameter uebergeben")
+        printHelp()
+        write(disp, "", "   ???")
 
