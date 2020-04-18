@@ -42,12 +42,14 @@ cmds = [(uptimeCmd,   "Läuft seit",  ""),
 callParam = ""
 if(len(sys.argv)!=2):
     print("Bitte mit genau einem Parameter aufrufen")
+    sys.exit()
 else:
     callParam = sys.argv[1]
 
 # Pruefen, ob Programm bereits laeuft (nur bei --debug oder --silent)
 if(int(subprocess.check_output(alreadyRunningCmd, shell=True))>1):
     print("Programm laeuft bereits!")
+    sys.exit()
 else:
     disp = Adafruit_SSD1306.SSD1306_128_32(rst=RST)
     disp.begin()
