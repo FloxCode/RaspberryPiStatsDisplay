@@ -28,7 +28,7 @@ hdUsageCmd    = "df | grep /dev/sda1 | awk '{printf \"%.2f\", $3*100/($3+$4)}'"
 sdUsageCmd    = "df | grep /dev/root | awk '{printf \"%.2f\", $3*100/($3+$4)}'"
 memUsageCmd   = "free | awk 'NR==2{printf \"%.1f\", $3*100/$2 }'"
 swapCmd       = "free | awk 'NR==3{printf \"%.1f\", $3*100/$2 }'"
-missedCallCmd = "fritzcall -i fritz.box "+fritzLogin+" | egrep -m1 -o '[0-9]{6,}'"
+missedCallCmd = "fritzcall -i fritz.box "+fritzLogin+" | egrep -o '[0-9]{6,}' | head -1"
 # Weitere Kommandos
 alreadyRunningCmd = "sudo ps aux | grep \"python.*statusDisplay.py\" | grep -v grep | wc -l"  
 shutdownCmd       = "sudo shutdown -h now"
