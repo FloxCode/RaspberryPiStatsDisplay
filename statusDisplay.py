@@ -40,7 +40,7 @@ cmds = [(uptimeCmd,     "Läuft seit",   ""),
         (sdUsageCmd,    "Micro-SD",     "%"),
         (memUsageCmd,   "RAM",          "%"),
         (swapCmd,       "Swap",         "%"),
-        (missedCallCmd, "Lezter Anruf", "")
+        (missedCallCmd, "Letzter Anruf", "")
         ]
 
 
