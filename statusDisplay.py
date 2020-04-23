@@ -15,27 +15,32 @@ height =  32
 width  = 128
 x      =   0
 y      =  -3
-updateTime    = 3
+updateTime    = 5
 shutdownDelay = 5
+fritzLogin = ""
+with open("fritzBoxApiLogin") as loginFile:
+    fritzLogin = loginFile.read().strip()
 # Daten-Kommandos
-uptimeCmd   = "uptime | grep -o 'up [^,]*' | grep -o '[0-9].*' | sed -e 's/days/Tagen/g' | sed -e 's/day/Tag/g'"
-cpuLoadCmd  = "top -bn1 | grep load | awk '{printf \"%.1f\", $(NF-2)*100/4}'"
-cpuTempCmd  = "vcgencmd measure_temp | grep -o '[0-9]\+\.[0-9]'"
-hdUsageCmd  = "df | grep /dev/sda1 | awk '{printf \"%.2f\", $3*100/($3+$4)}'"
-sdUsageCmd  = "df | grep /dev/root | awk '{printf \"%.2f\", $3*100/($3+$4)}'"
-memUsageCmd = "free | awk 'NR==2{printf \"%.1f\", $3*100/$2 }'"
-swapCmd     = "free | awk 'NR==3{printf \"%.1f\", $3*100/$2 }'"
+uptimeCmd     = "uptime | grep -o 'up [^,]*' | grep -o '[0-9].*' | sed -e 's/days/Tagen/g' | sed -e 's/day/Tag/g'"
+cpuLoadCmd    = "top -bn1 | grep load | awk '{printf \"%.1f\", $(NF-2)*100/4}'"
+cpuTempCmd    = "vcgencmd measure_temp | grep -o '[0-9]\+\.[0-9]'"
+hdUsageCmd    = "df | grep /dev/sda1 | awk '{printf \"%.2f\", $3*100/($3+$4)}'"
+sdUsageCmd    = "df | grep /dev/root | awk '{printf \"%.2f\", $3*100/($3+$4)}'"
+memUsageCmd   = "free | awk 'NR==2{printf \"%.1f\", $3*100/$2 }'"
+swapCmd       = "free | awk 'NR==3{printf \"%.1f\", $3*100/$2 }'"
+missedCallCmd = "fritzcall -i fritz.box "+fritzLogin+" | egrep -m1 -o '[0-9]{6,}'"
 # Weitere Kommandos
 alreadyRunningCmd = "sudo ps aux | grep \"python.*statusDisplay.py\" | grep -v grep | wc -l"  
 shutdownCmd       = "sudo shutdown -h now"
 
-cmds = [(uptimeCmd,   "Läuft seit",  ""),
-        (cpuLoadCmd,  "CPU-Last",    "%"),
-        (cpuTempCmd,  "CPU-Temp.",   "\'C"),
-        (hdUsageCmd,  "USB-Festpl.", "%"),
-        (sdUsageCmd,  "Micro-SD",    "%"),
-        (memUsageCmd, "RAM",         "%"),
-        (swapCmd,     "Swap",        "%")
+cmds = [(uptimeCmd,     "Läuft seit",   ""),
+        (cpuLoadCmd,    "CPU-Last",     "%"),
+        (cpuTempCmd,    "CPU-Temp.",    "\'C"),
+        (hdUsageCmd,    "USB-Festpl.",  "%"),
+        (sdUsageCmd,    "Micro-SD",     "%"),
+        (memUsageCmd,   "RAM",          "%"),
+        (swapCmd,       "Swap",         "%"),
+        (missedCallCmd, "Lezter Anruf", "")
         ]
 
 

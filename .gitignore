@@ -1,0 +1,2 @@
+# Datei in der die Login-Daten der FritzBox in der Form "-u <USER> -p <PASSWORD>" hinterlegt sind
+fritzBoxApiLogin
